@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#050505"/>
+  <circle cx="256" cy="256" r="174" fill="none" stroke="#d4a843" stroke-width="34"/>
+  <circle cx="256" cy="256" r="70" fill="none" stroke="#f0f0f0" stroke-width="24"/>
+  <g stroke="#d4a843" stroke-width="24" stroke-linecap="round">
+    <path d="M256 82v92"/>
+    <path d="M256 338v92"/>
+    <path d="M82 256h92"/>
+    <path d="M338 256h92"/>
+    <path d="M133 133l65 65"/>
+    <path d="M314 314l65 65"/>
+    <path d="M379 133l-65 65"/>
+    <path d="M198 314l-65 65"/>
+  </g>
+  <text x="256" y="276" text-anchor="middle" font-family="Arial, sans-serif" font-size="58" font-weight="800" fill="#f0f0f0">YT</text>
+</svg>

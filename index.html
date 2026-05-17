@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#d4a843">
+<meta name="description" content="Yashraj Tyres & Alloy Wheels — Latur's premium destination for tyres (14–18 inch) and alloy wheels.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Yashraj Tyres">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Yashraj Tyres & Alloy Wheels</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #050505;
+  --base: #0c0c0c;
+  --raised: #141414;
+  --plate: #1c1c1c;
+  --border: rgba(255,255,255,0.07);
+  --gold: #d4a843;
+  --gold2: #ecc96b;
+  --gold-dim: rgba(212,168,67,0.12);
+  --red: #bf3030;
+  --chrome: #b8b8b8;
+  --muted: rgba(184,184,184,0.5);
+  --white: #f0f0f0;
+  --safe-top: env(safe-area-inset-top);
+  --safe-bot: env(safe-area-inset-bottom);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior:smooth; scroll-padding-top:70px; }
+body {
+  background:var(--ink);
+  color:var(--white);
+  font-family:'DM Sans',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── INSTALL BANNER ─────────────────────────────── */
+#install-banner {
+  display:none;
+  position:fixed; bottom:0; left:0; right:0; z-index:200;
+  background:var(--gold);
+  padding:16px 20px calc(16px + var(--safe-bot));
+  flex-direction:column; gap:10px;
+  box-shadow:0 -4px 30px rgba(0,0,0,0.5);
+}
+#install-banner.show { display:flex; }
+.install-row { display:flex; align-items:center; justify-content:space-between; }
+.install-text { display:flex; align-items:center; gap:12px; }
+.install-icon { width:40px; height:40px; background:var(--ink); border-radius:10px; display:flex; align-items:center; justify-content:center; }
+.install-title { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; color:var(--ink); text-transform:uppercase; letter-spacing:1px; }
+.install-sub { font-size:11px; color:rgba(0,0,0,0.6); }
+.install-btns { display:flex; gap:8px; }
+.install-btn { background:var(--ink); color:var(--gold); border:none; padding:10px 20px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase; border-radius:2px; cursor:pointer; }
+.install-dismiss { background:transparent; border:1px solid rgba(0,0,0,0.2); color:rgba(0,0,0,0.5); padding:10px 16px; font-size:11px; letter-spacing:1px; border-radius:2px; cursor:pointer; }
+
+/* ── OFFLINE INDICATOR ──────────────────────────── */
+#offline-bar {
+  display:none; position:fixed; top:0; left:0; right:0; z-index:300;
+  background:var(--red); color:#fff; text-align:center;
+  padding:8px; font-size:12px; letter-spacing:2px; text-transform:uppercase;
+}
+#offline-bar.show { display:block; }
+
+/* ── NAV ────────────────────────────────────────── */
+header {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(5,5,5,0.92);
+  backdrop-filter:blur(16px) saturate(180%);
+  -webkit-backdrop-filter:blur(16px) saturate(180%);
+  border-bottom:1px solid var(--border);
+  padding-top:var(--safe-top);
+}
+nav {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 24px; height:62px;
+}
+.logo { display:flex; flex-direction:column; line-height:1; text-decoration:none; }
+.logo-name { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:3px; color:var(--white); }
+.logo-tag { font-size:8px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); font-weight:500; }
+.nav-cta {
+  background:var(--gold); color:var(--ink);
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:11px; letter-spacing:2px; text-transform:uppercase;
+  border:none; padding:9px 20px; cursor:pointer; border-radius:2px;
+  transition:background 0.2s, transform 0.2s;
+}
+.nav-cta:active { transform:scale(0.97); }
+.nav-cta:hover { background:var(--gold2); }
+
+/* Bottom nav */
+.bottom-nav {
+  position:fixed; bottom:0; left:0; right:0; z-index:100;
+  background:rgba(5,5,5,0.95);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;
+  padding-bottom:var(--safe-bot);
+}
+.nav-item {
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  padding:10px 4px 8px; gap:4px; cursor:pointer;
+  transition:opacity 0.2s; text-decoration:none; color:var(--muted);
+  font-size:9px; letter-spacing:1.5px; text-transform:uppercase; font-weight:500;
+}
+.nav-item svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.nav-item.active { color:var(--gold); }
+.nav-item:active { opacity:0.7; }
+
+/* ── SCROLL WRAPPER ─────────────────────────────── */
+main { padding-top:62px; padding-bottom:calc(64px + var(--safe-bot)); }
+
+/* ── HERO ───────────────────────────────────────── */
+#home {
+  min-height:calc(100svh - 62px);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  position:relative; overflow:hidden;
+  background:var(--ink);
+  padding:0 0 40px;
+}
+
+/* Hero background — SVG wheel */
+.hero-bg-wheel {
+  position:absolute; top:50%; right:-60px;
+  transform:translateY(-50%);
+  width:min(440px, 110vw); height:min(440px, 110vw);
+  opacity:0.07;
+  animation:spin 60s linear infinite;
+}
+@keyframes spin { to { transform:translateY(-50%) rotate(360deg); } }
+
+/* Radial glow */
+.hero-glow {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 40%, rgba(212,168,67,0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(191,48,48,0.07) 0%, transparent 55%);
+}
+
+/* Diagonal accent line */
+.hero-line {
+  position:absolute; top:0; bottom:0;
+  left:50%; width:1px;
+  background:linear-gradient(to bottom, transparent, rgba(212,168,67,0.12), transparent);
+}
+
+.hero-content {
+  position:relative; z-index:2;
+  padding:0 24px;
+}
+.hero-eyebrow {
+  display:flex; align-items:center; gap:12px;
+  font-size:9px; letter-spacing:5px; text-transform:uppercase;
+  color:var(--gold); font-weight:500; margin-bottom:18px;
+  opacity:0; animation:fadeUp 0.7s 0.2s ease forwards;
+}
+.hero-eyebrow::before { content:''; width:28px; height:1px; background:var(--gold); flex-shrink:0; }
+
+.hero-title {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(60px,18vw,100px);
+  line-height:0.9; letter-spacing:1px;
+  color:var(--white); margin-bottom:20px;
+  opacity:0; animation:fadeUp 0.7s 0.35s ease forwards;
+}
+.hero-title em { color:var(--gold); font-style:normal; }
+
+.hero-sub {
+  font-size:14px; line-height:1.65; color:var(--chrome); max-width:320px;
+  opacity:0; animation:fadeUp 0.7s 0.5s ease forwards;
+}
+
+.hero-actions {
+  display:flex; gap:12px; flex-wrap:wrap; margin-top:32px;
+  opacity:0; animation:fadeUp 0.7s 0.65s ease forwards;
+}
+.btn-gold {
+  background:var(--gold); color:var(--ink);
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  padding:14px 28px; border:none; cursor:pointer; border-radius:2px;
+  text-decoration:none; display:inline-block;
+  transition:background 0.2s, transform 0.15s;
+}
+.btn-gold:active { transform:scale(0.97); }
+.btn-outline {
+  border:1px solid rgba(255,255,255,0.18); color:var(--white);
+  font-family:'Barlow Condensed',sans-serif; font-weight:600;
+  font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  padding:14px 28px; background:transparent; cursor:pointer; border-radius:2px;
+  text-decoration:none; display:inline-block;
+  transition:border-color 0.2s, color 0.2s, transform 0.15s;
+}
+.btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+.btn-outline:active { transform:scale(0.97); }
+
+/* Hero stats strip */
+.hero-stats {
+  display:flex; gap:0; margin-top:40px;
+  border-top:1px solid var(--border); padding-top:30px;
+  opacity:0; animation:fadeUp 0.7s 0.8s ease forwards;
+}
+.stat { flex:1; text-align:center; border-right:1px solid var(--border); }
+.stat:last-child { border-right:none; }
+.stat-n { font-family:'Bebas Neue',sans-serif; font-size:34px; color:var(--gold); line-height:1; }
+.stat-l { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ── SECTION COMMON ─────────────────────────────── */
+.section { padding:72px 24px; }
+.section-tag {
+  display:flex; align-items:center; gap:12px;
+  font-size:9px; letter-spacing:5px; text-transform:uppercase;
+  color:var(--gold); font-weight:600; margin-bottom:14px;
+}
+.section-tag::before { content:''; width:22px; height:1px; background:var(--gold); }
+.section-title {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(38px,10vw,64px);
+  line-height:0.92; letter-spacing:1px; color:var(--white); margin-bottom:8px;
+}
+.section-title em { color:var(--gold); font-style:normal; }
+
+/* ── TICKER ─────────────────────────────────────── */
+.ticker { background:var(--gold); padding:12px 0; overflow:hidden; }
+.ticker-track { display:flex; animation:scroll 22s linear infinite; white-space:nowrap; }
+.ticker-item {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:12px; letter-spacing:4px; text-transform:uppercase;
+  color:var(--ink); padding:0 28px;
+}
+.ticker-item::after { content:'◆'; margin-left:28px; opacity:0.4; }
+@keyframes scroll { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+
+/* ── TYRE SIZES ─────────────────────────────────── */
+#sizes { background:var(--base); }
+.sizes-scroll {
+  display:flex; gap:14px; overflow-x:auto; padding:28px 0 8px;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none; -ms-overflow-style:none;
+}
+.sizes-scroll::-webkit-scrollbar { display:none; }
+.size-card {
+  flex:0 0 calc(50vw - 32px); max-width:180px;
+  background:var(--raised); border:1px solid var(--border);
+  padding:28px 20px 24px;
+  scroll-snap-align:start; border-radius:4px;
+  transition:border-color 0.3s, transform 0.3s;
+  cursor:pointer; position:relative; overflow:hidden;
+  text-align:center;
+}
+.size-card::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, transparent, var(--gold-dim));
+  opacity:0; transition:opacity 0.3s;
+}
+.size-card:hover, .size-card.active { border-color:var(--gold); }
+.size-card:hover::before, .size-card.active::before { opacity:1; }
+.size-card:active { transform:scale(0.97); }
+
+/* SVG Wheel inside each card */
+.wheel-svg { width:80px; height:80px; margin:0 auto 16px; display:block; }
+
+.size-num { font-family:'Bebas Neue',sans-serif; font-size:52px; color:var(--white); line-height:1; }
+.size-unit { font-size:13px; color:var(--chrome); letter-spacing:2px; font-weight:400; }
+.size-label { font-size:10px; color:var(--muted); margin-top:10px; letter-spacing:0.5px; line-height:1.4; }
+.size-badge {
+  position:absolute; top:10px; right:10px;
+  background:var(--gold); color:var(--ink);
+  font-size:7px; letter-spacing:1.5px; text-transform:uppercase;
+  padding:3px 8px; font-weight:700; border-radius:1px;
+}
+
+/* ── SERVICES ───────────────────────────────────── */
+#services { background:var(--ink); }
+.services-list { display:flex; flex-direction:column; gap:2px; margin-top:32px; }
+.service-item {
+  background:var(--raised); border:1px solid var(--border);
+  padding:28px 24px; display:flex; align-items:flex-start; gap:20px;
+  border-radius:4px; transition:border-color 0.3s, background 0.3s;
+  cursor:pointer; position:relative; overflow:hidden;
+}
+.service-item:hover { border-color:rgba(212,168,67,0.3); background:var(--plate); }
+.service-item.featured { background:var(--gold); border-color:var(--gold); }
+.service-item.featured .svc-title { color:var(--ink); }
+.service-item.featured .svc-desc { color:rgba(0,0,0,0.6); }
+.svc-icon {
+  width:44px; height:44px; flex-shrink:0;
+  background:var(--gold-dim); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px;
+}
+.service-item.featured .svc-icon { background:rgba(0,0,0,0.12); }
+.svc-body { flex:1; }
+.svc-num { font-size:9px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:6px; }
+.service-item.featured .svc-num { color:rgba(0,0,0,0.4); }
+.svc-title {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:20px; text-transform:uppercase; letter-spacing:0.5px;
+  color:var(--white); margin-bottom:6px;
+}
+.svc-desc { font-size:13px; line-height:1.6; color:var(--chrome); }
+.svc-arrow { font-size:20px; color:var(--gold); flex-shrink:0; align-self:center; }
+.service-item.featured .svc-arrow { color:var(--ink); }
+
+/* ── WHY US ─────────────────────────────────────── */
+#why { background:var(--base); }
+.why-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:32px; }
+.why-card {
+  background:var(--raised); padding:28px 22px;
+  border-top:2px solid var(--plate); transition:border-color 0.3s;
+  border-radius:4px;
+}
+.why-card:hover { border-color:var(--gold); }
+.why-icon { font-size:26px; margin-bottom:16px; }
+.why-t {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:18px; text-transform:uppercase; letter-spacing:0.5px;
+  color:var(--white); margin-bottom:8px;
+}
+.why-p { font-size:12px; line-height:1.65; color:var(--chrome); }
+
+/* ── BRANDS ─────────────────────────────────────── */
+#brands { background:var(--ink); }
+.brands-grid {
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:1px;
+  background:var(--border); margin-top:32px; border:1px solid var(--border);
+}
+.brand-cell {
+  background:var(--raised); padding:24px 10px; text-align:center;
+  font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:3px;
+  color:rgba(180,180,180,0.2); transition:color 0.3s, background 0.3s;
+  cursor:default;
+}
+.brand-cell:hover { color:var(--gold); background:var(--plate); }
+
+/* ── GALLERY ────────────────────────────────────── */
+#gallery { background:var(--base); }
+.gallery-scroll {
+  display:flex; gap:12px; overflow-x:auto; padding:28px 0 8px;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+}
+.gallery-scroll::-webkit-scrollbar { display:none; }
+.gallery-card {
+  flex:0 0 75vw; max-width:300px;
+  height:200px; border-radius:4px; overflow:hidden;
+  scroll-snap-align:start; position:relative;
+  border:1px solid var(--border);
+  background:var(--raised);
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:8px;
+}
+.gallery-wheel-wrap {
+  width:120px; height:120px; position:relative;
+}
+.gallery-wheel-wrap svg { animation:spinCard 8s linear infinite; }
+.gallery-label {
+  font-family:'Barlow Condensed',sans-serif; font-size:13px;
+  letter-spacing:3px; text-transform:uppercase; color:var(--chrome);
+  font-weight:600;
+}
+
+/* ── CONTACT ────────────────────────────────────── */
+#contact { background:var(--ink); }
+.contact-info-block {
+  display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:28px;
+}
+.info-card {
+  background:var(--raised); border:1px solid var(--border);
+  padding:22px 20px; border-radius:4px;
+}
+.info-card.full { grid-column:1/-1; }
+.info-lbl { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+.info-val { font-size:15px; color:var(--white); font-weight:400; line-height:1.4; }
+.info-val a { color:var(--gold); text-decoration:none; }
+
+.form-section { margin-top:32px; }
+.form-title {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:22px;
+  text-transform:uppercase; letter-spacing:1px; color:var(--white); margin-bottom:20px;
+}
+.form-group { margin-bottom:18px; }
+.form-group label {
+  display:block; font-size:9px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--chrome); margin-bottom:8px; font-weight:500;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width:100%; background:var(--raised); border:1px solid var(--border);
+  color:var(--white); padding:13px 16px; font-family:'DM Sans',sans-serif;
+  font-size:14px; font-weight:300; outline:none; border-radius:2px;
+  transition:border-color 0.3s; -webkit-appearance:none; appearance:none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color:var(--gold);
+}
+.form-group select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23d4a843' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:40px; }
+.form-group select option { background:var(--raised); }
+.form-group textarea { height:100px; resize:none; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+/* Success toast */
+#toast {
+  position:fixed; bottom:calc(80px + var(--safe-bot)); left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--gold); color:var(--ink);
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:13px; letter-spacing:2px; text-transform:uppercase;
+  padding:12px 28px; border-radius:2px; z-index:500;
+  opacity:0; transition:opacity 0.3s, transform 0.3s; white-space:nowrap;
+}
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ── REVEAL ─────────────────────────────────────── */
+.reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease; }
+.reveal.in { opacity:1; transform:none; }
+
+/* ── SPLASH ─────────────────────────────────────── */
+#splash {
+  position:fixed; inset:0; background:var(--ink);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  z-index:999; transition:opacity 0.6s ease, transform 0.6s ease;
+}
+#splash.out { opacity:0; pointer-events:none; }
+.splash-wheel { width:80px; height:80px; animation:spin 2s linear infinite; margin-bottom:24px; }
+.splash-name { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:5px; color:var(--white); }
+.splash-sub { font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-top:6px; }
+.splash-bar { width:120px; height:2px; background:var(--plate); border-radius:1px; margin-top:28px; overflow:hidden; }
+.splash-progress { height:100%; background:var(--gold); animation:load 1.5s ease forwards; }
+@keyframes load { from { width:0; } to { width:100%; } }
+
+@media (min-width:640px) {
+  .size-card { flex:0 0 160px; }
+  .why-grid { grid-template-columns:repeat(4,1fr); }
+  .brands-grid { grid-template-columns:repeat(4,1fr); }
+}
+
+/* ══ INSTAGRAM REELS ══════════════════════════════ */
+#reels { background:var(--ink); }
+.reels-header {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:16px; flex-wrap:wrap; margin-bottom:4px;
+}
+.ig-follow-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+  color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:11px; letter-spacing:2px; text-transform:uppercase;
+  border:none; padding:10px 18px; border-radius:6px; cursor:pointer;
+  text-decoration:none; white-space:nowrap;
+  transition:opacity 0.2s, transform 0.15s; flex-shrink:0;
+}
+.ig-follow-btn:active { transform:scale(0.96); opacity:0.9; }
+.ig-follow-btn svg { width:16px; height:16px; fill:#fff; flex-shrink:0; }
+
+/* Scrollable reel strip */
+.reels-scroll {
+  display:flex; gap:14px; overflow-x:auto; padding:24px 0 12px;
+  scroll-snap-type:x mandatory; scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.reels-scroll::-webkit-scrollbar { display:none; }
+
+/* Individual reel card */
+.reel-card {
+  flex:0 0 160px; height:285px; border-radius:12px; overflow:hidden;
+  scroll-snap-align:start; position:relative; cursor:pointer;
+  background:var(--raised); border:1px solid var(--border);
+  transition:transform 0.2s, box-shadow 0.3s;
+}
+.reel-card:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,0.5); }
+.reel-card:active { transform:scale(0.97); }
+
+/* Thumb overlay (shown before play) */
+.reel-thumb {
+  position:absolute; inset:0; z-index:2;
+  background:linear-gradient(160deg,#190d22 0%,#090914 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:12px; transition:opacity 0.35s, pointer-events 0.35s;
+}
+.reel-card.playing .reel-thumb { opacity:0; pointer-events:none; }
+.reel-play-ring {
+  width:58px; height:58px; border-radius:50%;
+  background:linear-gradient(135deg,#f09433,#dc2743,#bc1888);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 20px rgba(220,39,67,0.5);
+}
+.reel-play-ring svg { width:22px; height:22px; fill:#fff; margin-left:3px; }
+.reel-thumb-title {
+  font-family:'Barlow Condensed',sans-serif; font-weight:600;
+  font-size:11px; letter-spacing:1px; text-transform:uppercase;
+  color:var(--chrome); text-align:center; padding:0 10px;
+  line-height:1.35; max-height:38px; overflow:hidden;
+}
+.reel-thumb-tag {
+  position:absolute; top:10px; left:10px; z-index:3;
+  background:linear-gradient(135deg,#f09433,#bc1888);
+  color:#fff; font-size:8px; letter-spacing:1.5px; font-weight:700;
+  text-transform:uppercase; padding:3px 8px; border-radius:4px;
+}
+.reel-bottom-grad {
+  position:absolute; bottom:0; left:0; right:0; height:70px;
+  background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);
+  z-index:1; pointer-events:none;
+}
+
+/* The actual embed */
+.reel-iframe {
+  position:absolute; inset:0; width:100%; height:100%;
+  border:none; z-index:1;
+  display:none;
+}
+.reel-card.playing .reel-iframe { display:block; }
+
+/* "Open on Instagram" link at bottom of each thumb */
+.reel-open-link {
+  position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
+  z-index:3; font-size:9px; letter-spacing:1.5px; text-transform:uppercase;
+  color:rgba(255,255,255,0.45); white-space:nowrap; text-decoration:none;
+  transition:color 0.2s;
+}
+.reel-open-link:hover { color:var(--gold); }
+
+/* ══ GOOGLE MAP ═══════════════════════════════════ */
+#map-section { background:var(--base); }
+.map-box {
+  margin-top:24px; border-radius:12px; overflow:hidden;
+  border:1px solid var(--border); position:relative;
+}
+.map-iframe {
+  width:100%; height:320px; border:none; display:block;
+  /* Dark-mode tint */
+  filter:invert(1) hue-rotate(180deg) saturate(0.4) brightness(0.88);
+}
+.map-bar {
+  background:var(--raised); border-top:1px solid var(--border);
+  padding:18px 20px; display:flex; align-items:center;
+  justify-content:space-between; gap:14px;
+}
+.map-info { flex:1; min-width:0; }
+.map-name {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:17px; text-transform:uppercase; letter-spacing:0.5px;
+  color:var(--white); margin-bottom:3px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.map-addr { font-size:12px; color:var(--muted); line-height:1.4; }
+.map-dir-btn {
+  display:inline-flex; align-items:center; gap:7px;
+  background:var(--gold); color:var(--ink);
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:11px; letter-spacing:2px; text-transform:uppercase;
+  border:none; padding:11px 18px; border-radius:6px; cursor:pointer;
+  text-decoration:none; white-space:nowrap; flex-shrink:0;
+  transition:background 0.2s, transform 0.15s;
+  box-shadow:0 4px 14px rgba(212,168,67,0.3);
+}
+.map-dir-btn:hover { background:var(--gold2); }
+.map-dir-btn:active { transform:scale(0.97); }
+.map-dir-btn svg { width:15px; height:15px; stroke:var(--ink); fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+
+/* Floating WhatsApp + Call row */
+.shop-quick-actions {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;
+}
+.quick-btn {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  padding:13px 10px; border-radius:8px; text-decoration:none;
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:13px; letter-spacing:1.5px; text-transform:uppercase;
+  transition:opacity 0.2s, transform 0.15s; border:none; cursor:pointer;
+}
+.quick-btn:active { transform:scale(0.97); opacity:0.9; }
+.quick-btn.whatsapp { background:#25d366; color:#fff; }
+.quick-btn.call { background:var(--raised); color:var(--white); border:1px solid var(--border); }
+.quick-btn svg { width:18px; height:18px; fill:currentColor; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <svg class="splash-wheel" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="46" stroke="#d4a843" stroke-width="3"/>
+    <circle cx="50" cy="50" r="28" stroke="rgba(212,168,67,0.3)" stroke-width="1.5"/>
+    <circle cx="50" cy="50" r="10" fill="#d4a843" opacity="0.9"/>
+    <line x1="50" y1="4" x2="50" y2="40" stroke="#d4a843" stroke-width="2.5"/>
+    <line x1="50" y1="60" x2="50" y2="96" stroke="#d4a843" stroke-width="2.5"/>
+    <line x1="4" y1="50" x2="40" y2="50" stroke="#d4a843" stroke-width="2.5"/>
+    <line x1="60" y1="50" x2="96" y2="50" stroke="#d4a843" stroke-width="2.5"/>
+    <line x1="21" y1="21" x2="36" y2="36" stroke="#d4a843" stroke-width="2.5"/>
+    <line x1="64" y1="64" x2="79" y2="79" stroke="#d4a843" stroke-width="2.5"/>
+    <line x1="79" y1="21" x2="64" y2="36" stroke="#d4a843" stroke-width="2.5"/>
+    <line x1="36" y1="64" x2="21" y2="79" stroke="#d4a843" stroke-width="2.5"/>
+  </svg>
+  <div class="splash-name">YASHRAJ</div>
+  <div class="splash-sub">Tyres & Alloy Wheels</div>
+  <div class="splash-bar"><div class="splash-progress"></div></div>
+</div>
+
+<!-- OFFLINE BAR -->
+<div id="offline-bar">⚡ You're offline — viewing cached content</div>
+
+<!-- INSTALL BANNER -->
+<div id="install-banner">
+  <div class="install-row">
+    <div class="install-text">
+      <div class="install-icon">
+        <svg width="22" height="22" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="44" stroke="#d4a843" stroke-width="6"/>
+          <line x1="50" y1="6" x2="50" y2="38" stroke="#d4a843" stroke-width="5"/>
+          <line x1="50" y1="62" x2="50" y2="94" stroke="#d4a843" stroke-width="5"/>
+          <line x1="6" y1="50" x2="38" y2="50" stroke="#d4a843" stroke-width="5"/>
+          <line x1="62" y1="50" x2="94" y2="50" stroke="#d4a843" stroke-width="5"/>
+          <circle cx="50" cy="50" r="10" fill="#d4a843"/>
+        </svg>
+      </div>
+      <div>
+        <div class="install-title">Install App</div>
+        <div class="install-sub">Add to home screen for quick access</div>
+      </div>
+    </div>
+    <div class="install-btns">
+      <button class="install-dismiss" id="install-dismiss">Later</button>
+      <button class="install-btn" id="install-btn">Install</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <nav>
+    <a href="#home" class="logo">
+      <span class="logo-name">YASHRAJ</span>
+      <span class="logo-tag">Tyres & Alloy Wheels</span>
+    </a>
+    <button class="nav-cta" onclick="scrollTo('contact')">Get Quote</button>
+  </nav>
+</header>
+
+<!-- MAIN -->
+<main>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-bg-wheel">
+      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="200" r="192" stroke="white" stroke-width="3"/>
+        <circle cx="200" cy="200" r="140" stroke="white" stroke-width="1.5" stroke-dasharray="6 10"/>
+        <circle cx="200" cy="200" r="88" stroke="white" stroke-width="2.5"/>
+        <circle cx="200" cy="200" r="36" stroke="white" stroke-width="1.5"/>
+        <circle cx="200" cy="200" r="14" fill="white" opacity="0.6"/>
+        <line x1="200" y1="8" x2="200" y2="164" stroke="white" stroke-width="4"/>
+        <line x1="200" y1="236" x2="200" y2="392" stroke="white" stroke-width="4"/>
+        <line x1="8" y1="200" x2="164" y2="200" stroke="white" stroke-width="4"/>
+        <line x1="236" y1="200" x2="392" y2="200" stroke="white" stroke-width="4"/>
+        <line x1="87" y1="87" x2="152" y2="152" stroke="white" stroke-width="4"/>
+        <line x1="248" y1="248" x2="313" y2="313" stroke="white" stroke-width="4"/>
+        <line x1="313" y1="87" x2="248" y2="152" stroke="white" stroke-width="4"/>
+        <line x1="152" y1="248" x2="87" y2="313" stroke="white" stroke-width="4"/>
+      </svg>
+    </div>
+    <div class="hero-glow"></div>
+    <div class="hero-line"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">Latur's Finest Since 2024</div>
+      <h1 class="hero-title">GRIP THE<br><em>ROAD.</em><br>OWN IT.</h1>
+      <p class="hero-sub">Yashraj Tyres & Alloy Wheels - Premium tyres & alloy wheels for every vehicle. Expert fitment. Unbeatable prices.</p>
+      <div class="hero-actions">
+        <a href="#sizes" class="btn-gold" onclick="scrollTo('sizes');return false;">Explore Sizes</a>
+        <a href="#contact" class="btn-outline" onclick="scrollTo('contact');return false;">Free Quote</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-n">3+</div><div class="stat-l">Years</div></div>
+        <div class="stat"><div class="stat-n">2K+</div><div class="stat-l">Clients</div></div>
+        <div class="stat"><div class="stat-n">30+</div><div class="stat-l">Brands</div></div>
+        <div class="stat"><div class="stat-n">8</div><div class="stat-l">Sizes</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">Premium Tyres</span>
+      <span class="ticker-item">Alloy Wheels</span>
+      <span class="ticker-item">3D Alignment</span>
+      <span class="ticker-item">Balancing</span>
+      <span class="ticker-item">Nitrogen Filling</span>
+      <span class="ticker-item">14–18 Inch</span>
+      <span class="ticker-item">Latur Pune</span>
+      <span class="ticker-item">Premium Tyres</span>
+      <span class="ticker-item">Alloy Wheels</span>
+      <span class="ticker-item">3D Alignment</span>
+      <span class="ticker-item">Balancing</span>
+      <span class="ticker-item">Nitrogen Filling</span>
+      </div>
+  </div>
+
+  <!-- TYRE SIZES -->
+  <section class="section" id="sizes">
+    <div class="section-tag reveal">Tyre Size Range</div>
+    <h2 class="section-title reveal">FIND YOUR<br><em>PERFECT FIT</em></h2>
+    <div class="sizes-scroll reveal">
+
+      <div class="size-card">
+        <svg class="wheel-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,0.15)" stroke-width="3"/>
+          <circle cx="50" cy="50" r="30" stroke="rgba(212,168,67,0.25)" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="10" fill="rgba(212,168,67,0.3)"/>
+          <line x1="50" y1="4" x2="50" y2="40" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="50" y1="60" x2="50" y2="96" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="4" y1="50" x2="40" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="60" y1="50" x2="96" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="19" y1="19" x2="32" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="68" y1="68" x2="81" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="81" y1="19" x2="68" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="32" y1="68" x2="19" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+        </svg>
+        <div class="size-num">14</div>
+        <div class="size-unit">INCH</div>
+        <div class="size-label">Hatchbacks<br>& Entry Sedans</div>
+      </div>
+
+      <div class="size-card">
+        <div class="size-badge">Popular</div>
+        <svg class="wheel-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,0.15)" stroke-width="3"/>
+          <circle cx="50" cy="50" r="30" stroke="rgba(212,168,67,0.25)" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="10" fill="rgba(212,168,67,0.4)"/>
+          <line x1="50" y1="4" x2="50" y2="40" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="50" y1="60" x2="50" y2="96" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="4" y1="50" x2="40" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="60" y1="50" x2="96" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="19" y1="19" x2="32" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="68" y1="68" x2="81" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="81" y1="19" x2="68" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="32" y1="68" x2="19" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+        </svg>
+        <div class="size-num">15</div>
+        <div class="size-unit">INCH</div>
+        <div class="size-label">Sedans &<br>Compact SUVs</div>
+      </div>
+
+      <div class="size-card">
+        <div class="size-badge">Best Seller</div>
+        <svg class="wheel-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" stroke="#d4a843" stroke-width="2.5"/>
+          <circle cx="50" cy="50" r="30" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="10" fill="#d4a843" opacity="0.8"/>
+          <line x1="50" y1="4" x2="50" y2="40" stroke="#d4a843" stroke-width="2.5" opacity="0.6"/>
+          <line x1="50" y1="60" x2="50" y2="96" stroke="#d4a843" stroke-width="2.5" opacity="0.6"/>
+          <line x1="4" y1="50" x2="40" y2="50" stroke="#d4a843" stroke-width="2.5" opacity="0.6"/>
+          <line x1="60" y1="50" x2="96" y2="50" stroke="#d4a843" stroke-width="2.5" opacity="0.6"/>
+          <line x1="19" y1="19" x2="32" y2="32" stroke="#d4a843" stroke-width="2" opacity="0.4"/>
+          <line x1="68" y1="68" x2="81" y2="81" stroke="#d4a843" stroke-width="2" opacity="0.4"/>
+          <line x1="81" y1="19" x2="68" y2="32" stroke="#d4a843" stroke-width="2" opacity="0.4"/>
+          <line x1="32" y1="68" x2="19" y2="81" stroke="#d4a843" stroke-width="2" opacity="0.4"/>
+        </svg>
+        <div class="size-num">16</div>
+        <div class="size-unit">INCH</div>
+        <div class="size-label">SUVs &<br>Mid Saloons</div>
+      </div>
+
+      <div class="size-card">
+        <svg class="wheel-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,0.15)" stroke-width="3"/>
+          <circle cx="50" cy="50" r="30" stroke="rgba(212,168,67,0.25)" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="10" fill="rgba(212,168,67,0.3)"/>
+          <line x1="50" y1="4" x2="50" y2="40" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="50" y1="60" x2="50" y2="96" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="4" y1="50" x2="40" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="60" y1="50" x2="96" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="19" y1="19" x2="32" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="68" y1="68" x2="81" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="81" y1="19" x2="68" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="32" y1="68" x2="19" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+        </svg>
+        <div class="size-num">17</div>
+        <div class="size-unit">INCH</div>
+        <div class="size-label">Sports &<br>Premium SUVs</div>
+      </div>
+
+      <div class="size-card">
+        <div class="size-badge">Premium</div>
+        <svg class="wheel-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,0.15)" stroke-width="3"/>
+          <circle cx="50" cy="50" r="30" stroke="rgba(212,168,67,0.25)" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="10" fill="rgba(212,168,67,0.5)"/>
+          <line x1="50" y1="4" x2="50" y2="40" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="50" y1="60" x2="50" y2="96" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="4" y1="50" x2="40" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="60" y1="50" x2="96" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+          <line x1="19" y1="19" x2="32" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="68" y1="68" x2="81" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="81" y1="19" x2="68" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+          <line x1="32" y1="68" x2="19" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+        </svg>
+        <div class="size-num">18</div>
+        <div class="size-unit">INCH</div>
+        <div class="size-label">Luxury &<br>Performance</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="section-tag reveal">Our Services</div>
+    <h2 class="section-title reveal">WHAT WE<br><em>DELIVER</em></h2>
+    <div class="services-list reveal">
+
+      <div class="service-item featured">
+        <div class="svc-icon">🛞</div>
+        <div class="svc-body">
+          <div class="svc-num">01</div>
+          <div class="svc-title">Premium Tyre Sales & Fitment</div>
+          <div class="svc-desc">Hand-selected tyres from top manufacturers with computerised torque fitment.</div>
+        </div>
+        <div class="svc-arrow">→</div>
+      </div>
+
+      <div class="service-item">
+        <div class="svc-icon">✨</div>
+        <div class="svc-body">
+          <div class="svc-num">02</div>
+          <div class="svc-title">Alloy Wheel Sales & Fitting</div>
+          <div class="svc-desc">Curated alloy wheels for every style — sport, luxury, and off-road profiles.</div>
+        </div>
+        <div class="svc-arrow" style="color:var(--gold)">→</div>
+      </div>
+
+      <div class="service-item">
+        <div class="svc-icon">⚖️</div>
+        <div class="svc-body">
+          <div class="svc-num">03</div>
+          <div class="svc-title">Dynamic Wheel Balancing</div>
+          <div class="svc-desc">Eliminate vibration. Extend tyre life. Improve ride quality dramatically.</div>
+        </div>
+        <div class="svc-arrow" style="color:var(--gold)">→</div>
+      </div>
+
+      <div class="service-item">
+        <div class="svc-icon">📐</div>
+        <div class="svc-body">
+          <div class="svc-num">04</div>
+          <div class="svc-title">3D Wheel Alignment</div>
+          <div class="svc-desc">Computer-aided precision alignment — save fuel, protect tyres, drive straight.</div>
+        </div>
+        <div class="svc-arrow" style="color:var(--gold)">→</div>
+      </div>
+
+      <div class="service-item">
+        <div class="svc-icon">💨</div>
+        <div class="svc-body">
+          <div class="svc-num">05</div>
+          <div class="svc-title">Nitrogen Inflation</div>
+          <div class="svc-desc">Stable pressure. Better mileage. Longer tyre life. Zero moisture inside.</div>
+        </div>
+        <div class="svc-arrow" style="color:var(--gold)">→</div>
+      </div>
+
+      <div class="service-item">
+        <div class="svc-icon">🔧</div>
+        <div class="svc-body">
+          <div class="svc-num">06</div>
+          <div class="svc-title">Puncture & Repair</div>
+          <div class="svc-desc">Fast, reliable puncture repairs. Tyre rotation. Seasonal swap service.</div>
+        </div>
+        <div class="svc-arrow" style="color:var(--gold)">→</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GALLERY - Animated Wheel Showcase -->
+  <section class="section" id="gallery" style="padding-top:0">
+    <div class="section-tag reveal">Wheel Styles</div>
+    <h2 class="section-title reveal">OUR<br><em>COLLECTION</em></h2>
+    <div class="gallery-scroll reveal">
+
+      <div class="gallery-card" style="background:linear-gradient(135deg,#111,#1a1a1a)">
+        <div class="gallery-wheel-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="56" stroke="#d4a843" stroke-width="3"/>
+            <circle cx="60" cy="60" r="38" stroke="rgba(212,168,67,0.3)" stroke-width="2"/>
+            <circle cx="60" cy="60" r="14" fill="#d4a843" opacity="0.9"/>
+            <circle cx="60" cy="60" r="6" fill="#0c0c0c"/>
+            <line x1="60" y1="4" x2="60" y2="46" stroke="#d4a843" stroke-width="3.5"/>
+            <line x1="60" y1="74" x2="60" y2="116" stroke="#d4a843" stroke-width="3.5"/>
+            <line x1="4" y1="60" x2="46" y2="60" stroke="#d4a843" stroke-width="3.5"/>
+            <line x1="74" y1="60" x2="116" y2="60" stroke="#d4a843" stroke-width="3.5"/>
+            <line x1="22" y1="22" x2="43" y2="43" stroke="#d4a843" stroke-width="3"/>
+            <line x1="77" y1="77" x2="98" y2="98" stroke="#d4a843" stroke-width="3"/>
+            <line x1="98" y1="22" x2="77" y2="43" stroke="#d4a843" stroke-width="3"/>
+            <line x1="43" y1="77" x2="22" y2="98" stroke="#d4a843" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="gallery-label">8-Spoke Classic</div>
+      </div>
+
+      <div class="gallery-card" style="background:linear-gradient(135deg,#0f0f18,#141428)">
+        <div class="gallery-wheel-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="56" stroke="rgba(255,255,255,0.2)" stroke-width="4"/>
+            <circle cx="60" cy="60" r="42" stroke="rgba(212,168,67,0.4)" stroke-width="1.5" stroke-dasharray="8 6"/>
+            <circle cx="60" cy="60" r="26" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+            <circle cx="60" cy="60" r="12" fill="rgba(255,255,255,0.15)"/>
+            <circle cx="60" cy="60" r="5" fill="white" opacity="0.6"/>
+            <line x1="60" y1="4" x2="60" y2="48" stroke="rgba(255,255,255,0.4)" stroke-width="4"/>
+            <line x1="60" y1="72" x2="60" y2="116" stroke="rgba(255,255,255,0.4)" stroke-width="4"/>
+            <line x1="4" y1="60" x2="48" y2="60" stroke="rgba(255,255,255,0.4)" stroke-width="4"/>
+            <line x1="72" y1="60" x2="116" y2="60" stroke="rgba(255,255,255,0.4)" stroke-width="4"/>
+            <line x1="27" y1="27" x2="43" y2="43" stroke="rgba(255,255,255,0.25)" stroke-width="3"/>
+            <line x1="77" y1="77" x2="93" y2="93" stroke="rgba(255,255,255,0.25)" stroke-width="3"/>
+            <line x1="93" y1="27" x2="77" y2="43" stroke="rgba(255,255,255,0.25)" stroke-width="3"/>
+            <line x1="43" y1="77" x2="27" y2="93" stroke="rgba(255,255,255,0.25)" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="gallery-label">Chrome Sport</div>
+      </div>
+
+      <div class="gallery-card" style="background:linear-gradient(135deg,#180e0e,#1f1010)">
+        <div class="gallery-wheel-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="56" stroke="#bf3030" stroke-width="3"/>
+            <circle cx="60" cy="60" r="36" stroke="rgba(191,48,48,0.3)" stroke-width="2"/>
+            <circle cx="60" cy="60" r="14" fill="#bf3030" opacity="0.8"/>
+            <circle cx="60" cy="60" r="5" fill="#0c0c0c"/>
+            <line x1="60" y1="4" x2="60" y2="46" stroke="#bf3030" stroke-width="3" opacity="0.7"/>
+            <line x1="60" y1="74" x2="60" y2="116" stroke="#bf3030" stroke-width="3" opacity="0.7"/>
+            <line x1="4" y1="60" x2="46" y2="60" stroke="#bf3030" stroke-width="3" opacity="0.7"/>
+            <line x1="74" y1="60" x2="116" y2="60" stroke="#bf3030" stroke-width="3" opacity="0.7"/>
+            <line x1="22" y1="22" x2="43" y2="43" stroke="#bf3030" stroke-width="2.5" opacity="0.5"/>
+            <line x1="77" y1="77" x2="98" y2="98" stroke="#bf3030" stroke-width="2.5" opacity="0.5"/>
+            <line x1="98" y1="22" x2="77" y2="43" stroke="#bf3030" stroke-width="2.5" opacity="0.5"/>
+            <line x1="43" y1="77" x2="22" y2="98" stroke="#bf3030" stroke-width="2.5" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="gallery-label">Red Sport Edition</div>
+      </div>
+
+      <div class="gallery-card" style="background:linear-gradient(135deg,#0e0e14,#111120)">
+        <div class="gallery-wheel-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="56" stroke="rgba(212,168,67,0.6)" stroke-width="2"/>
+            <circle cx="60" cy="60" r="48" stroke="rgba(212,168,67,0.15)" stroke-width="1"/>
+            <circle cx="60" cy="60" r="30" stroke="rgba(212,168,67,0.2)" stroke-width="1.5"/>
+            <circle cx="60" cy="60" r="10" fill="rgba(212,168,67,0.6)"/>
+            <line x1="60" y1="4" x2="60" y2="50" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="60" y1="70" x2="60" y2="116" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="4" y1="60" x2="50" y2="60" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="70" y1="60" x2="116" y2="60" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="27" y1="27" x2="44" y2="44" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+            <line x1="76" y1="76" x2="93" y2="93" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+            <line x1="93" y1="27" x2="76" y2="44" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+            <line x1="44" y1="76" x2="27" y2="93" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="gallery-label">Luxury Gold</div>
+      </div>
+
+	  <div class="gallery-card" style="background:linear-gradient(135deg,#180e0e,#1f1010)">
+        <div class="gallery-wheel-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="56" stroke="#bf3030" stroke-width="3"/>
+            <circle cx="60" cy="60" r="36" stroke="rgba(191,48,48,0.3)" stroke-width="2"/>
+            <circle cx="60" cy="60" r="14" fill="#bf3030" opacity="0.8"/>
+            <circle cx="60" cy="60" r="5" fill="#0c0c0c"/>
+            <line x1="60" y1="4" x2="60" y2="46" stroke="#bf3030" stroke-width="3" opacity="0.7"/>
+            <line x1="60" y1="74" x2="60" y2="116" stroke="#bf3030" stroke-width="3" opacity="0.7"/>
+            <line x1="4" y1="60" x2="46" y2="60" stroke="#bf3030" stroke-width="3" opacity="0.7"/>
+            <line x1="74" y1="60" x2="116" y2="60" stroke="#bf3030" stroke-width="3" opacity="0.7"/>
+            <line x1="22" y1="22" x2="43" y2="43" stroke="#bf3030" stroke-width="2.5" opacity="0.5"/>
+            <line x1="77" y1="77" x2="98" y2="98" stroke="#bf3030" stroke-width="2.5" opacity="0.5"/>
+            <line x1="98" y1="22" x2="77" y2="43" stroke="#bf3030" stroke-width="2.5" opacity="0.5"/>
+            <line x1="43" y1="77" x2="22" y2="98" stroke="#bf3030" stroke-width="2.5" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="gallery-label">Red Sport Edition</div>
+      </div>
+
+      <div class="gallery-card" style="background:linear-gradient(135deg,#0e0e14,#111120)">
+        <div class="gallery-wheel-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="56" stroke="rgba(212,168,67,0.6)" stroke-width="2"/>
+            <circle cx="60" cy="60" r="48" stroke="rgba(212,168,67,0.15)" stroke-width="1"/>
+            <circle cx="60" cy="60" r="30" stroke="rgba(212,168,67,0.2)" stroke-width="1.5"/>
+            <circle cx="60" cy="60" r="10" fill="rgba(212,168,67,0.6)"/>
+            <line x1="60" y1="4" x2="60" y2="50" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="60" y1="70" x2="60" y2="116" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="4" y1="60" x2="50" y2="60" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="70" y1="60" x2="116" y2="60" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="27" y1="27" x2="44" y2="44" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+            <line x1="76" y1="76" x2="93" y2="93" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+            <line x1="93" y1="27" x2="76" y2="44" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+            <line x1="44" y1="76" x2="27" y2="93" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="gallery-label">Luxury Gold</div>
+      </div>
+
+	  <div class="gallery-card" style="background:linear-gradient(135deg,#0e0e14,#111120)">
+        <div class="gallery-wheel-wrap">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="56" stroke="rgba(212,168,67,0.6)" stroke-width="2"/>
+            <circle cx="60" cy="60" r="48" stroke="rgba(212,168,67,0.15)" stroke-width="1"/>
+            <circle cx="60" cy="60" r="30" stroke="rgba(212,168,67,0.2)" stroke-width="1.5"/>
+            <circle cx="60" cy="60" r="10" fill="rgba(212,168,67,0.6)"/>
+            <line x1="60" y1="4" x2="60" y2="50" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="60" y1="70" x2="60" y2="116" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="4" y1="60" x2="50" y2="60" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="70" y1="60" x2="116" y2="60" stroke="rgba(212,168,67,0.5)" stroke-width="2"/>
+            <line x1="27" y1="27" x2="44" y2="44" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+            <line x1="76" y1="76" x2="93" y2="93" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+            <line x1="93" y1="27" x2="76" y2="44" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+            <line x1="44" y1="76" x2="27" y2="93" stroke="rgba(212,168,67,0.35)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="gallery-label">Premium Gold</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  INSTAGRAM REELS                                   -->
+  <!--  → Replace the reel URLs below with your own links -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section class="section" id="reels">
+    <div class="reels-header reveal">
+      <div>
+        <div class="section-tag" style="margin-bottom:10px">@yashrajtyre2025</div>
+        <h2 class="section-title" style="font-size:clamp(32px,8vw,54px)">WATCH OUR<br><em>REELS</em></h2>
+      </div>
+      <a href="https://www.instagram.com/yashrajtyre2025" target="_blank" rel="noopener" class="ig-follow-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Follow Us
+      </a>
+    </div>
+
+    <div class="reels-scroll reveal" id="reels-track">
+
+      <!-- ─────────────────────────────────────────── -->
+      <!--  REEL 1 — Replace shortcode & title below   -->
+      <!-- ─────────────────────────────────────────── -->
+      <div class="reel-card" id="rc0">
+        <div class="reel-thumb-tag">Reel</div>
+        <div class="reel-thumb">
+          <div class="reel-play-ring">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="reel-thumb-title">17-Inch Premium Alloys — Grand Vitara</div>
+          <a class="reel-open-link" href="https://www.instagram.com/reel/DXO81woEZ92/?igsh=d2Q3a3gyanA0dGJm" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open on Instagram ↗</a>
+        </div>
+        <div class="reel-bottom-grad"></div>
+        <iframe class="reel-iframe" id="ri0"
+          src="https://www.instagram.com/reel/DXO81woEZ92/embed"
+          data-src="https://www.instagram.com/reel/DXO81woEZ92/embed"
+          allowfullscreen scrolling="no" allowtransparency="true"></iframe>
+      </div>
+
+      <!-- ─────────────────────────────────────────── -->
+      <!--  REEL 2                                     -->
+      <!-- ─────────────────────────────────────────── -->
+      <div class="reel-card" id="rc1">
+        <div class="reel-thumb-tag">Reel</div>
+        <div class="reel-thumb">
+          <div class="reel-play-ring">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="reel-thumb-title">13-Inch Premium Mac Alloys Wheels — Alto</div>
+          <a class="reel-open-link" href="https://www.instagram.com/reel/DW3tz44EeR_/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open on Instagram ↗</a>
+        </div>
+        <div class="reel-bottom-grad"></div>
+        <iframe class="reel-iframe" id="ri1"
+          src="https://www.instagram.com/reel/DW3tz44EeR_/embed/"
+          data-src="https://www.instagram.com/reel/DW3tz44EeR_/embed/"
+          allowfullscreen scrolling="no" allowtransparency="true"></iframe>
+      </div>
+
+      <!-- ─────────────────────────────────────────── -->
+      <!--  REEL 3                                     -->
+      <!-- ─────────────────────────────────────────── -->
+      <div class="reel-card" id="rc2">
+        <div class="reel-thumb-tag">Reel</div>
+        <div class="reel-thumb">
+          <div class="reel-play-ring">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="reel-thumb-title">Exiting Offer on Wheel Cap- 500-900RS</div>
+          <a class="reel-open-link" href="https://www.instagram.com/reel/DWOh1EEEYpN/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open on Instagram ↗</a>
+        </div>
+        <div class="reel-bottom-grad"></div>
+        <iframe class="reel-iframe" id="ri2"
+          src="https://www.instagram.com/reel/DWOh1EEEYpN/embed/"
+          data-src="https://www.instagram.com/reel/DWOh1EEEYpN/embed/"
+          allowfullscreen scrolling="no" allowtransparency="true"></iframe>
+      </div>
+
+
+	  <!-- ─────────────────────────────────────────── -->
+      <!--  REEL 4                                     -->
+      <!-- ─────────────────────────────────────────── -->
+      <div class="reel-card" id="rc2">
+        <div class="reel-thumb-tag">Reel</div>
+        <div class="reel-thumb">
+          <div class="reel-play-ring">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="reel-thumb-title">14 Inch Premium Alloy — Dzire</div>
+          <a class="reel-open-link" href="https://www.instagram.com/reel/DWbaG8gEZU8/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open on Instagram ↗</a>
+        </div>
+        <div class="reel-bottom-grad"></div>
+        <iframe class="reel-iframe" id="ri2"
+          src="https://www.instagram.com/reel/DWbaG8gEZU8/embed/"
+          data-src="https://www.instagram.com/reel/DWbaG8gEZU8/embed/"
+          allowfullscreen scrolling="no" allowtransparency="true"></iframe>
+      </div>
+
+       
+	  <!-- ─────────────────────────────────────────── -->
+      <!--  REEL 5                                     -->
+      <!-- ─────────────────────────────────────────── -->
+      <!-- 
+      <div class="reel-card" id="rc2">
+        <div class="reel-thumb-tag">Reel</div>
+        <div class="reel-thumb">
+          <div class="reel-play-ring">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="reel-thumb-title">14 Inch Premium Alloy — Pickup</div>
+          <a class="reel-open-link" href="https://www.instagram.com/reel/DWY-ZPnEWzK/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open on Instagram ↗</a>
+        </div>
+        <div class="reel-bottom-grad"></div>
+        <iframe class="reel-iframe" id="ri2"
+          src="https://www.instagram.com/reel/DWY-ZPnEWzK/embed/"
+          data-src="https://www.instagram.com/reel/DWY-ZPnEWzK/embed/"
+          allowfullscreen scrolling="no" allowtransparency="true"></iframe>
+      </div>
+      -->
+
+	  <!-- ─────────────────────────────────────────── -->
+      <!--  REEL 6                                     -->
+      <!-- ─────────────────────────────────────────── -->
+      <!-- 
+      <div class="reel-card" id="rc2">
+        <div class="reel-thumb-tag">Reel</div>
+        <div class="reel-thumb">
+          <div class="reel-play-ring">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="reel-thumb-title">16 Inch Surya Design — Brezza</div>
+          <a class="reel-open-link" href="https://www.instagram.com/reel/DWjHB4AExNa/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open on Instagram ↗</a>
+        </div>
+        <div class="reel-bottom-grad"></div>
+        <iframe class="reel-iframe" id="ri2"
+          src="https://www.instagram.com/reel/DWjHB4AExNa/embed/"
+          data-src="https://www.instagram.com/reel/DWjHB4AExNa/embed/"
+          allowfullscreen scrolling="no" allowtransparency="true"></iframe>
+      </div>
+      --> 
+
+	  <!-- ─────────────────────────────────────────── -->
+      <!--  REEL 7                                     -->
+      <!-- ─────────────────────────────────────────── -->
+      <!--  
+      <div class="reel-card" id="rc3">
+        <div class="reel-thumb-tag">Reel</div>
+        <div class="reel-thumb">
+          <div class="reel-play-ring">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="reel-thumb-title">13-14-15 Inch Design — Available</div>
+          <a class="reel-open-link" href="https://www.instagram.com/reel/DVlU-yxkdCK/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open on Instagram ↗</a>
+        </div>
+        <div class="reel-bottom-grad"></div>
+        <iframe class="reel-iframe" id="ri3"
+          src="https://www.instagram.com/reel/DVlU-yxkdCK/embed/"
+          data-src="https://www.instagram.com/reel/DVlU-yxkdCK/embed/"
+          allowfullscreen scrolling="no" allowtransparency="true"></iframe>
+      </div>
+      -->
+
+    </div><!-- /reels-scroll -->
+
+    <p style="margin-top:12px;font-size:10px;color:var(--muted);text-align:center;letter-spacing:1px;line-height:1.6;" class="reveal">
+      Tap any card to play the reel &nbsp;·&nbsp; Swipe to browse<br>
+      <span style="color:rgba(184,184,184,0.3);">Replace <code style="font-size:9px;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:3px;">REPLACE_CODE_N</code> in the HTML with your actual Instagram reel shortcodes</span>
+    </p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  GOOGLE MAP LOCATION                               -->
+  <!--  → Replace the iframe src with your shop's embed   -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section class="section" id="map-section" style="background:var(--base);padding-top:48px">
+    <div class="section-tag reveal">Find Our Shop</div>
+    <h2 class="section-title reveal">WE ARE IN<br><em>LATUR</em></h2>
+
+    <div class="map-box reveal">
+      
+      <iframe
+        class="map-iframe"
+        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d473.2650614921648!2d76.587567!3d18.3873665!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcf83412514efaf%3A0xf77f041c993316fe!2sYashRaj%20Tyres%20%26%20Alloy%20-%20Best%20Tyres%20In%20Latur%20%7C%20Best%20Wheel%20Alignment%20Service%20In%20Latur!5e0!3m2!1sen!2sin!4v1778420280136!5m2!1sen!2sin"
+        allowfullscreen loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Yashraj Tyres & Alloy Wheels — Latur">
+      </iframe>
+
+      <div class="map-bar">
+        <div class="map-info">
+          <div class="map-name">Yashraj Tyres & Alloy Wheels</div>
+          <div class="map-addr">Latur – 413512, Maharashtra</div>
+        </div>
+        <a href="https://www.google.com/maps/place/YashRaj+Tyres+%26+Alloy+-+Best+Tyres+In+Latur+%7C+Best+Wheel+Alignment+Service+In+Latur/@18.3873665,76.587567,20z/data=!4m6!3m5!1s0x3bcf83412514efaf:0xf77f041c993316fe!8m2!3d18.3874642!4d76.5878217!16s%2Fg%2F11xyvg9f6g?entry=ttu&g_ep=EgoyMDI2MDUwNi4wIKXMDSoASAFQAw%3D%3D"
+           target="_blank" rel="noopener" class="map-dir-btn">
+          <svg viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+          Directions
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick action buttons -->
+    <div class="shop-quick-actions reveal">
+      <a href="https://wa.me/918408898883?text=Hi%2C%20I%20need%20a%20quote%20for%20tyres & Alloy Wheels" target="_blank" rel="noopener" class="quick-btn whatsapp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Us
+      </a>
+      <a href="tel:+918408898883" class="quick-btn call">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91A16 16 0 0016.09 17.91l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        Call Now
+      </a>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="section" id="why">
+    <div class="section-tag reveal">Why Yashraj</div>
+    <h2 class="section-title reveal">TRUSTED BY<br><em>THOUSANDS</em></h2>
+    <div class="why-grid reveal">
+      <div class="why-card">
+        <div class="why-icon">🏆</div>
+        <div class="why-t">3+ Years</div>
+        <div class="why-p">Two decades serving Latur's drivers with expertise.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔬</div>
+        <div class="why-t">Hi-Tech Tools</div>
+        <div class="why-p">Computerised balancers and 3D alignment systems.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💯</div>
+        <div class="why-t">100% Genuine</div>
+        <div class="why-p">Authorised products only. Zero counterfeits.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">⚡</div>
+        <div class="why-t">Fast Service</div>
+        <div class="why-p">Most fitments completed within the hour.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRANDS -->
+  <section class="section" id="brands" style="padding-top:0">
+    <div class="section-tag reveal">Authorised Dealer</div>
+    <h2 class="section-title reveal">TOP<br><em>BRANDS</em></h2>
+    <div class="brands-grid reveal">
+      <div class="brand-cell">MRF</div>
+      <div class="brand-cell">Apollo</div>
+      <div class="brand-cell">CEAT</div>
+      <div class="brand-cell">Bridgestone</div>
+      <div class="brand-cell">Michelin</div>
+      <div class="brand-cell">Continental</div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="section-tag reveal">Get In Touch</div>
+    <h2 class="section-title reveal">VISIT OR<br><em>CALL US</em></h2>
+
+    <div class="contact-info-block reveal">
+      <div class="info-card">
+        <div class="info-lbl">Address</div>
+        <div class="info-val">Shop No 16, Sidheshwar Nagar — Latur<br>Latur – 413512</div>
+      </div>
+      <div class="info-card">
+        <div class="info-lbl">Phone</div>
+        <div class="info-val"><a href="tel:+918408898883">+91 8408898883</a></div>
+      </div>
+      <div class="info-card">
+        <div class="info-lbl">Hours</div>
+        <div class="info-val">Mon–Sat: 10AM–9PM<br>Sun: 10AM–5PM</div>
+      </div>
+      <div class="info-card">
+        <div class="info-lbl">Email</div>
+        <div class="info-val"><a href="mailto:info@yashrajtyres.com">info@yashrajtyres.com</a></div>
+      </div>
+    </div>
+
+    <div class="form-section reveal">
+      <div class="form-title">Request a Free Quote</div>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="f-name" placeholder="Full name" autocomplete="name">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label>Vehicle Type</label>
+          <select id="f-vehicle">
+            <option value="">Select…</option>
+            <option>Hatchback</option>
+            <option>Sedan</option>
+            <option>SUV / MUV</option>
+            <option>Luxury Car</option>
+            <option>Commercial</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tyre Size</label>
+          <select id="f-size">
+            <option value="">Select…</option>
+            <option>14 Inch</option>
+            <option>15 Inch</option>
+            <option>16 Inch</option>
+            <option>17 Inch</option>
+            <option>18 Inch</option>
+            <option>Not Sure</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Service</label>
+          <select id="f-service">
+            <option value="">Select…</option>
+            <option>Tyre Purchase</option>
+            <option>Alloy Wheels</option>
+            <option>Wheel Alignment</option>
+            <option>Balancing</option>
+            <option>Puncture Repair</option>
+            <option>Nitrogen Filling</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="f-msg" placeholder="Tell us your requirements…"></textarea>
+      </div>
+      <button class="btn-gold" style="width:100%;padding:16px;font-size:13px;letter-spacing:3px;" onclick="submitForm()">
+        Send Enquiry →
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="#home" class="nav-item active" onclick="setNav(this)">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+    Home
+  </a>
+  <a href="#sizes" class="nav-item" onclick="setNav(this)">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="22"/><line x1="2" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="22" y2="12"/></svg>
+    Sizes
+  </a>
+  <a href="#reels" class="nav-item" onclick="setNav(this)">
+    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    Reels
+  </a>
+  <a href="#map-section" class="nav-item" onclick="setNav(this)">
+    <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    Map
+  </a>
+  <a href="#contact" class="nav-item" onclick="setNav(this)">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91A16 16 0 0016.09 17.91l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+    Contact
+  </a>
+</nav>
+
+<!-- TOAST -->
+<div id="toast">✓ Enquiry sent! We'll call you shortly.</div>
+
+<script>
+// ── SPLASH ───────────────────────
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('out');
+    setTimeout(() => document.getElementById('splash').remove(), 700);
+  }, 1800);
+});
+
+// ── SERVICE WORKER ───────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+// ── OFFLINE DETECTION ────────────
+const offBar = document.getElementById('offline-bar');
+function updateOnline() {
+  offBar.classList.toggle('show', !navigator.onLine);
+}
+window.addEventListener('online', updateOnline);
+window.addEventListener('offline', updateOnline);
+updateOnline();
+
+// ── PWA INSTALL ──────────────────
+let deferredPrompt;
+const banner = document.getElementById('install-banner');
+const installBtn = document.getElementById('install-btn');
+const dismissBtn = document.getElementById('install-dismiss');
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  setTimeout(() => banner.classList.add('show'), 3000);
+});
+
+installBtn.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  banner.classList.remove('show');
+});
+
+dismissBtn.addEventListener('click', () => banner.classList.remove('show'));
+
+window.addEventListener('appinstalled', () => banner.classList.remove('show'));
+
+// ── SCROLL NAV ───────────────────
+function scrollTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+function setNav(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Auto-update bottom nav on scroll
+const sectionIds = ['home','sizes','services','reels','map-section','why','brands','contact'];
+const navItems = document.querySelectorAll('.nav-item');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navItems.forEach(n => {
+        n.classList.toggle('active', n.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-40% 0px -40% 0px' });
+sectionIds.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+
+// ── SCROLL REVEAL ─────────────────
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── FORM SUBMIT ───────────────────
+function submitForm() {
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if (!name || !phone) {
+    alert('Please enter your name and phone number.');
+    return;
+  }
+  // Store offline if needed
+  const data = {
+    name, phone,
+    vehicle: document.getElementById('f-vehicle').value,
+    size: document.getElementById('f-size').value,
+    service: document.getElementById('f-service').value,
+    msg: document.getElementById('f-msg').value,
+    ts: Date.now()
+  };
+  try {
+    const stored = JSON.parse(localStorage.getItem('yashraj_enquiries') || '[]');
+    stored.push(data);
+    localStorage.setItem('yashraj_enquiries', JSON.stringify(stored));
+  } catch(e) {}
+
+  // Show toast
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+
+  // Reset
+  ['f-name','f-phone','f-msg'].forEach(id => document.getElementById(id).value = '');
+  ['f-vehicle','f-size','f-service'].forEach(id => document.getElementById(id).selectedIndex = 0);
+
+  // Background sync if supported
+  if ('serviceWorker' in navigator && 'SyncManager' in window) {
+    navigator.serviceWorker.ready.then(sw => sw.sync.register('quote-sync')).catch(() => {});
+  }
+}
+
+// ── REEL PLAY ─────────────────────
+document.querySelectorAll('.reel-card').forEach(card => {
+  card.addEventListener('click', function() {
+    if (this.classList.contains('playing')) return;
+    const iframe = this.querySelector('.reel-iframe');
+    if (iframe && !iframe.src) {
+      iframe.src = iframe.dataset.src;
+    }
+    this.classList.add('playing');
+  });
+});
+
+// ── SIZE CARD ACTIVE ──────────────
+document.querySelectorAll('.size-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.size-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+  });
+});
+
+// ── GALLERY WHEEL SPIN ON ENTER ───
+document.querySelectorAll('.gallery-wheel-wrap').forEach(wrap => {
+  const obs2 = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      e.target.querySelector('svg').style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+    });
+  }, { threshold: 0.5 });
+  obs2.observe(wrap);
+  wrap.querySelector('svg').style.animation = 'spinCard 8s linear infinite';
+  wrap.querySelector('svg').style.animationPlayState = 'paused';
+});
+</script>
+<style>
+@keyframes spinCard { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+</style>
+</body>
+</html>
