@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useEffect } from "react";
 
 export default function PwaShell({ html }) {
@@ -15,8 +14,6 @@ export default function PwaShell({ html }) {
     window.addEventListener("online", updateOnline);
     window.addEventListener("offline", updateOnline);
     updateOnline();
-
-    document.getElementById("splash")?.remove();
 
     let deferredPrompt;
     const banner = document.getElementById("install-banner");
@@ -211,6 +208,110 @@ export default function PwaShell({ html }) {
       return () => card.removeEventListener("click", activate);
     });
 
+    const lightbox = document.createElement("div");
+    lightbox.className = "photo-lightbox";
+    lightbox.setAttribute("role", "dialog");
+    lightbox.setAttribute("aria-modal", "true");
+    lightbox.innerHTML = `
+      <div class="lb-top">
+        <div class="lb-heading">
+          <div class="lb-title"></div>
+          <div class="lb-count"></div>
+        </div>
+        <button type="button" class="lb-close" aria-label="Close photos">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+        </button>
+      </div>
+      <div class="lb-stage">
+        <button type="button" class="lb-nav lb-prev" aria-label="Previous photo">
+          <svg viewBox="0 0 24 24"><polyline points="15 5 8 12 15 19"/></svg>
+        </button>
+        <img class="lb-img" alt="" />
+        <button type="button" class="lb-nav lb-next" aria-label="Next photo">
+          <svg viewBox="0 0 24 24"><polyline points="9 5 16 12 9 19"/></svg>
+        </button>
+      </div>
+      <div class="lb-thumbs"></div>`;
+    document.body.appendChild(lightbox);
+
+    const lbImg = lightbox.querySelector(".lb-img");
+    const lbThumbs = lightbox.querySelector(".lb-thumbs");
+    let lbPhotos = [];
+    let lbIndex = 0;
+    let lbTitle = "";
+    let touchStartX = null;
+
+    const renderLightbox = () => {
+      lbImg.src = lbPhotos[lbIndex];
+      lbImg.alt = `${lbTitle} - photo ${lbIndex + 1}`;
+      lightbox.querySelector(".lb-count").textContent = `${lbIndex + 1} / ${lbPhotos.length}`;
+      lbThumbs.querySelectorAll(".lb-thumb").forEach((thumb, i) => {
+        thumb.classList.toggle("active", i === lbIndex);
+        if (i === lbIndex) thumb.scrollIntoView({ block: "nearest", inline: "center" });
+      });
+    };
+    const stepLightbox = (delta) => {
+      lbIndex = (lbIndex + delta + lbPhotos.length) % lbPhotos.length;
+      renderLightbox();
+    };
+    const openLightbox = (title, photos) => {
+      lbTitle = title;
+      lbPhotos = photos;
+      lbIndex = 0;
+      lightbox.querySelector(".lb-title").textContent = title;
+      lightbox.classList.toggle("single", photos.length < 2);
+      lbThumbs.innerHTML = photos
+        .map((src, i) => `<button type="button" class="lb-thumb" data-index="${i}" aria-label="Photo ${i + 1}"><img src="${src}" alt="" loading="lazy" /></button>`)
+        .join("");
+      lightbox.classList.add("open");
+      document.documentElement.classList.add("lb-lock");
+      renderLightbox();
+      lightbox.querySelector(".lb-close").focus({ preventScroll: true });
+    };
+    const closeLightbox = () => {
+      lightbox.classList.remove("open");
+      document.documentElement.classList.remove("lb-lock");
+    };
+    const onLightboxClick = (event) => {
+      const thumb = event.target.closest(".lb-thumb");
+      if (thumb) {
+        lbIndex = Number(thumb.dataset.index);
+        renderLightbox();
+      } else if (event.target.closest(".lb-prev")) stepLightbox(-1);
+      else if (event.target.closest(".lb-next")) stepLightbox(1);
+      else if (event.target.closest(".lb-close") || event.target === lightbox || event.target.classList.contains("lb-stage")) {
+        closeLightbox();
+      }
+    };
+    const onLightboxKey = (event) => {
+      if (!lightbox.classList.contains("open")) return;
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "ArrowLeft") stepLightbox(-1);
+      if (event.key === "ArrowRight") stepLightbox(1);
+    };
+    const onTouchStart = (event) => {
+      touchStartX = event.touches[0].clientX;
+    };
+    const onTouchEnd = (event) => {
+      if (touchStartX === null || lbPhotos.length < 2) return;
+      const deltaX = event.changedTouches[0].clientX - touchStartX;
+      touchStartX = null;
+      if (Math.abs(deltaX) > 40) stepLightbox(deltaX < 0 ? 1 : -1);
+    };
+    lightbox.addEventListener("click", onLightboxClick);
+    lbImg.addEventListener("touchstart", onTouchStart, { passive: true });
+    lbImg.addEventListener("touchend", onTouchEnd);
+    document.addEventListener("keydown", onLightboxKey);
+
+    const photoCleanups = [...document.querySelectorAll(".size-photos-btn")].map((button) => {
+      const open = () => {
+        const photos = (button.dataset.photos || "").split(",").map((src) => src.trim()).filter(Boolean);
+        if (photos.length) openLightbox(button.dataset.title || "", photos);
+      };
+      button.addEventListener("click", open);
+      return () => button.removeEventListener("click", open);
+    });
+
     const wheelObservers = [...document.querySelectorAll(".gallery-wheel-wrap")].map((wrap) => {
       const svg = wrap.querySelector("svg");
       const observer = new IntersectionObserver(
@@ -242,19 +343,16 @@ export default function PwaShell({ html }) {
       wheelObservers.forEach((observer) => observer.disconnect());
       reelCleanups.forEach((cleanup) => cleanup());
       sizeCleanups.forEach((cleanup) => cleanup());
+      photoCleanups.forEach((cleanup) => cleanup());
+      document.removeEventListener("keydown", onLightboxKey);
+      lightbox.remove();
+      document.documentElement.classList.remove("lb-lock");
       delete window.submitForm;
       window.scrollTo = nativeScrollTo;
       delete window.setNav;
     };
   }, []);
 
-  return (
-    <motion.div
-      className="min-h-screen bg-ink text-white"
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: "easeOut" }}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  );
+  // Plain div so the server-rendered page is visible before JavaScript loads
+  return <div className="min-h-screen bg-ink text-white" dangerouslySetInnerHTML={{ __html: html }} />;
 }

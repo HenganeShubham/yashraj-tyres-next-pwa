@@ -1,4 +1,4 @@
-const CACHE = "yashraj-tyres-v1";
+const CACHE = "yashraj-tyres-v6";
 const ASSETS = ["/", "/manifest.json", "/icon.svg"];
 
 self.addEventListener("install", (event) => {

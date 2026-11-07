@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#d4a843">
-<meta name="description" content="Yashraj Tyres & Alloy Wheels — Latur's premium destination for tyres (14–18 inch) and alloy wheels.">
+<meta name="description" content="Yashraj Tyres & Alloy Wheels — Latur's premium destination for tyres (13–17 inch) and alloy wheels.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Yashraj Tyres">
@@ -590,26 +590,6 @@ main { padding-top:62px; padding-bottom:calc(64px + var(--safe-bot)); }
 </head>
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <svg class="splash-wheel" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="50" cy="50" r="46" stroke="#d4a843" stroke-width="3"/>
-    <circle cx="50" cy="50" r="28" stroke="rgba(212,168,67,0.3)" stroke-width="1.5"/>
-    <circle cx="50" cy="50" r="10" fill="#d4a843" opacity="0.9"/>
-    <line x1="50" y1="4" x2="50" y2="40" stroke="#d4a843" stroke-width="2.5"/>
-    <line x1="50" y1="60" x2="50" y2="96" stroke="#d4a843" stroke-width="2.5"/>
-    <line x1="4" y1="50" x2="40" y2="50" stroke="#d4a843" stroke-width="2.5"/>
-    <line x1="60" y1="50" x2="96" y2="50" stroke="#d4a843" stroke-width="2.5"/>
-    <line x1="21" y1="21" x2="36" y2="36" stroke="#d4a843" stroke-width="2.5"/>
-    <line x1="64" y1="64" x2="79" y2="79" stroke="#d4a843" stroke-width="2.5"/>
-    <line x1="79" y1="21" x2="64" y2="36" stroke="#d4a843" stroke-width="2.5"/>
-    <line x1="36" y1="64" x2="21" y2="79" stroke="#d4a843" stroke-width="2.5"/>
-  </svg>
-  <div class="splash-name">YASHRAJ</div>
-  <div class="splash-sub">Tyres & Alloy Wheels</div>
-  <div class="splash-bar"><div class="splash-progress"></div></div>
-</div>
-
 <!-- OFFLINE BAR -->
 <div id="offline-bar">⚡ You're offline — viewing cached content</div>
 
@@ -700,7 +680,7 @@ main { padding-top:62px; padding-bottom:calc(64px + var(--safe-bot)); }
       <span class="ticker-item">3D Alignment</span>
       <span class="ticker-item">Balancing</span>
       <span class="ticker-item">Nitrogen Filling</span>
-      <span class="ticker-item">14–18 Inch</span>
+      <span class="ticker-item">13–17 Inch</span>
       <span class="ticker-item">Latur Pune</span>
       <span class="ticker-item">Premium Tyres</span>
       <span class="ticker-item">Alloy Wheels</span>
@@ -717,42 +697,38 @@ main { padding-top:62px; padding-bottom:calc(64px + var(--safe-bot)); }
     <div class="sizes-scroll reveal">
 
       <div class="size-card">
-        <svg class="wheel-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,0.15)" stroke-width="3"/>
-          <circle cx="50" cy="50" r="30" stroke="rgba(212,168,67,0.25)" stroke-width="1.5"/>
-          <circle cx="50" cy="50" r="10" fill="rgba(212,168,67,0.3)"/>
-          <line x1="50" y1="4" x2="50" y2="40" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="50" y1="60" x2="50" y2="96" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="4" y1="50" x2="40" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="60" y1="50" x2="96" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="19" y1="19" x2="32" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-          <line x1="68" y1="68" x2="81" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-          <line x1="81" y1="19" x2="68" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-          <line x1="32" y1="68" x2="19" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-        </svg>
+        <img class="wheel-photo" src="/photos/13-inch/thumb.jpg" alt="13 inch wheel cap" width="96" height="96" loading="lazy">
+        <div class="size-num">13</div>
+        <div class="size-unit">INCH</div>
+        <div class="size-label">Compact &<br>Small Cars</div>
+        <button type="button" class="size-photos-btn" data-title="13 Inch"
+          data-photos="/photos/13-inch/1.jpg,/photos/13-inch/2.jpg,/photos/13-inch/3.jpg,/photos/13-inch/4.jpg">
+          See Photos
+        </button>
+      </div>
+
+      <div class="size-card">
+        <img class="wheel-photo" src="/photos/14-inch/thumb.jpg" alt="14 inch wheel cap" width="96" height="96" loading="lazy">
         <div class="size-num">14</div>
         <div class="size-unit">INCH</div>
         <div class="size-label">Hatchbacks<br>& Entry Sedans</div>
+        <!-- To add photos to another size, copy this button into its card and list the image paths -->
+        <button type="button" class="size-photos-btn" data-title="14 Inch"
+          data-photos="/photos/14-inch/1.jpg,/photos/14-inch/2.jpg,/photos/14-inch/3.jpg,/photos/14-inch/4.jpg">
+          See Photos
+        </button>
       </div>
 
       <div class="size-card">
         <div class="size-badge">Popular</div>
-        <svg class="wheel-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,0.15)" stroke-width="3"/>
-          <circle cx="50" cy="50" r="30" stroke="rgba(212,168,67,0.25)" stroke-width="1.5"/>
-          <circle cx="50" cy="50" r="10" fill="rgba(212,168,67,0.4)"/>
-          <line x1="50" y1="4" x2="50" y2="40" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="50" y1="60" x2="50" y2="96" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="4" y1="50" x2="40" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="60" y1="50" x2="96" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="19" y1="19" x2="32" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-          <line x1="68" y1="68" x2="81" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-          <line x1="81" y1="19" x2="68" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-          <line x1="32" y1="68" x2="19" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-        </svg>
+        <img class="wheel-photo" src="/photos/15-inch/thumb.jpg" alt="15 inch wheel cap" width="96" height="96" loading="lazy">
         <div class="size-num">15</div>
         <div class="size-unit">INCH</div>
         <div class="size-label">Sedans &<br>Compact SUVs</div>
+        <button type="button" class="size-photos-btn" data-title="15 Inch"
+          data-photos="/photos/15-inch/1.jpg,/photos/15-inch/2.jpg,/photos/15-inch/3.jpg,/photos/15-inch/4.jpg">
+          See Photos
+        </button>
       </div>
 
       <div class="size-card">
@@ -792,26 +768,6 @@ main { padding-top:62px; padding-bottom:calc(64px + var(--safe-bot)); }
         <div class="size-num">17</div>
         <div class="size-unit">INCH</div>
         <div class="size-label">Sports &<br>Premium SUVs</div>
-      </div>
-
-      <div class="size-card">
-        <div class="size-badge">Premium</div>
-        <svg class="wheel-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="46" stroke="rgba(255,255,255,0.15)" stroke-width="3"/>
-          <circle cx="50" cy="50" r="30" stroke="rgba(212,168,67,0.25)" stroke-width="1.5"/>
-          <circle cx="50" cy="50" r="10" fill="rgba(212,168,67,0.5)"/>
-          <line x1="50" y1="4" x2="50" y2="40" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="50" y1="60" x2="50" y2="96" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="4" y1="50" x2="40" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="60" y1="50" x2="96" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
-          <line x1="19" y1="19" x2="32" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-          <line x1="68" y1="68" x2="81" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-          <line x1="81" y1="19" x2="68" y2="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-          <line x1="32" y1="68" x2="19" y2="81" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-        </svg>
-        <div class="size-num">18</div>
-        <div class="size-unit">INCH</div>
-        <div class="size-label">Luxury &<br>Performance</div>
       </div>
 
     </div>
@@ -1341,11 +1297,11 @@ main { padding-top:62px; padding-bottom:calc(64px + var(--safe-bot)); }
           <label>Tyre Size</label>
           <select id="f-size">
             <option value="">Select…</option>
+            <option>13 Inch</option>
             <option>14 Inch</option>
             <option>15 Inch</option>
             <option>16 Inch</option>
             <option>17 Inch</option>
-            <option>18 Inch</option>
             <option>Not Sure</option>
           </select>
         </div>
@@ -1402,14 +1358,6 @@ main { padding-top:62px; padding-bottom:calc(64px + var(--safe-bot)); }
 <div id="toast">✓ Enquiry sent! We'll call you shortly.</div>
 
 <script>
-// ── SPLASH ───────────────────────
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('splash').classList.add('out');
-    setTimeout(() => document.getElementById('splash').remove(), 700);
-  }, 1800);
-});
-
 // ── SERVICE WORKER ───────────────
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
