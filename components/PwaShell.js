@@ -201,7 +201,7 @@ export default function PwaShell({ html }) {
 
     const sizeCleanups = [...document.querySelectorAll(".size-card")].map((card) => {
       const activate = () => {
-        document.querySelectorAll(".size-card").forEach((item) => item.classList.remove("active"));
+        card.parentElement.querySelectorAll(".size-card").forEach((item) => item.classList.remove("active"));
         card.classList.add("active");
       };
       card.addEventListener("click", activate);

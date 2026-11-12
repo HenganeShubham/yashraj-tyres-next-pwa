@@ -276,6 +276,7 @@ main { padding-top:62px; padding-bottom:calc(64px + var(--safe-bot)); }
 .size-num { font-family:'Bebas Neue',sans-serif; font-size:52px; color:var(--white); line-height:1; }
 .size-unit { font-size:13px; color:var(--chrome); letter-spacing:2px; font-weight:400; }
 .size-label { font-size:10px; color:var(--muted); margin-top:10px; letter-spacing:0.5px; line-height:1.4; }
+.size-fits { color:var(--chrome); }
 .size-badge {
   position:absolute; top:10px; right:10px;
   background:var(--gold); color:var(--ink);
